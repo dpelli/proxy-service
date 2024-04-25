@@ -41,7 +41,19 @@ def get_recipes_list():
     }
     response = requests.get(api_url, headers=headers, params=querystring)
     data = response.json()
-    return jsonify(data)
+    results = [
+        {
+            "id": result["id"],
+            "name": result["name"],
+            "description": result["description"],
+            "nutrition": result["nutrition"],
+            "num_servings": result["num_servings"],
+            "cook_time_minutes": result["cook_time_minutes"],
+            "user_ratings": result["user_ratings"],
+        }
+        for result in data["results"]
+    ]
+    return jsonify({"results": results})
 
 
 if __name__ == "__main__":

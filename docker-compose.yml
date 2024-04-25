@@ -2,7 +2,7 @@ version: '3'
 services:
   techops-server:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: .
     volumes:
       - .:/app
