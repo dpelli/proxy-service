@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: proxy-service
-          image: dmpelletier1989/proxy-service
+          image: dmpelletier1989/proxy-service-api
           ports:
             - containerPort: 5000

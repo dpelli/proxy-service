@@ -1,11 +1,10 @@
 version: '3'
 services:
-  techops-server:
+  api:
     build:
       dockerfile: Dockerfile
       context: .
     volumes:
       - .:/app
-    restart: on-failure
     ports:
       - "5000:5000"
