@@ -1,4 +1,4 @@
-# Salesloft TechOps Exercise - Proxy Service API
+# Proxy Service API
 
 This is a simple proxy service API built using Python with Flask, Docker for containerization, and Kubernetes for deployment.
 
