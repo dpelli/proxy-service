@@ -80,14 +80,16 @@ To run the API within a Docker container using docker-compose:
    ```bash
    kubectl describe services proxy-service-ip-service
    ```
-4. To teardown the deployment:
+4. Teardown:
    ```bash
    kubectl delete deployment proxy-service
+   kubectl delete service proxy-service-ip-service
    ```
 
 ## Endpoints
 
-- `/`: Proxy endpoint that returns a list of recipes data from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
+- `/`: Returns a list of recipes from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
+- `/tag`: Returns a list of recipe tags from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
 
 ## API Documentation
 
