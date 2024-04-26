@@ -89,7 +89,7 @@ To run the API within a Docker container using docker-compose:
 ## Endpoints
 
 - `/`: Returns a list of recipes from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
-- `/tag`: Returns a list of recipe tags from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
+- `/tags`: Returns a list of recipe tags from [Tasty API](https://rapidapi.com/apidojo/api/tasty/).
 
 ## API Documentation
 
