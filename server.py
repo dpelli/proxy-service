@@ -10,28 +10,14 @@ API_KEY = config("API_KEY")
 BASE_URL = "https://tasty.p.rapidapi.com"
 
 
-# Create main route
 @app.route("/")
-def say_hello():
-    """
-    Hello World
-    ---
-    responses:
-      200:
-        description: A JSON response from the TechOps API
-    """
-    return {"message": "Hello World!"}
-
-
-# External API methods
-@app.route("/recipes")
 def get_recipes_list():
     """
     Generates a list of recipes
     ---
     responses:
       200:
-        description: A JSON response from the TechOps API
+        description: A JSON response from the Proxy Service API
     """
     api_url = f"{BASE_URL}/recipes/list"
     querystring = {"from": "0", "size": "20", "tags": "under_30_minutes"}

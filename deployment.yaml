@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: proxy-service-deployment
+  name: proxy-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: proxy-service
@@ -13,7 +13,8 @@ spec:
         app: proxy-service
     spec:
       containers:
-        - name: proxy-service
-          image: dmpelletier1989/proxy-service-api
-          ports:
-            - containerPort: 5000
+      - name: proxy-service
+        image: proxy-service
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
