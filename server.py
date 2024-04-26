@@ -32,8 +32,8 @@ def get_recipes_list() -> Response:
     """
 
     # Get request query params. If none, set defaults
-    size: str = request.args.get("size", "20")
-    tags: str = request.args.get("tags", "under_30_minutes")
+    size = request.args.get("size", "20")
+    tags = request.args.get("tags", "under_30_minutes")
 
     api_url = f"{BASE_URL}/recipes/list"
     querystring = {"from": "0", "size": size, "tags": tags}
