@@ -76,9 +76,11 @@ To run the API within a Docker container using docker-compose:
    ```
 
 2. Access the API through the Kubernetes service.
-
-3. To teardown the deployment:
-
+3. To describe the service:
+   ```bash
+   kubectl describe services proxy-service-ip-service
+   ```
+4. To teardown the deployment:
    ```bash
    kubectl delete deployment proxy-service
    ```

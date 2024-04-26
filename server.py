@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, Response
 import requests
 from decouple import config
 from flasgger import Swagger
@@ -11,33 +11,84 @@ BASE_URL = "https://tasty.p.rapidapi.com"
 
 
 @app.route("/")
-def get_recipes_list():
+def get_recipes_list() -> Response:
     """
-    Generates a list of recipes
+    Generates a list of recipes from the Tasty API
+    ---
+    parameters:
+      - name: size
+        in: query
+        type: string
+        required: false
+        description: The number of recipes to return
+      - name: tags
+        in: query
+        type: string
+        required: false
+        description: A tag by which to filter the response
+    responses:
+      200:
+        description: A JSON response from the Proxy Service API
+    """
+
+    # Get request query params. If none, set defaults
+    size: str = request.args.get("size", "20")
+    tags: str = request.args.get("tags", "under_30_minutes")
+
+    api_url = f"{BASE_URL}/recipes/list"
+    querystring = {"from": "0", "size": size, "tags": tags}
+    headers = {
+        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Host": "tasty.p.rapidapi.com",
+    }
+
+    # Make request to Tasty API for recipes fitting the size and tags filters
+    response = requests.get(api_url, headers=headers, params=querystring)
+    data = response.json()
+
+    # Parse Tasty API response for essential information
+    results = [
+        {
+            "id": idx,
+            "tasty_id": result.get("id", ""),
+            "name": result.get("name", ""),
+            "description": result.get("description", ""),
+            "nutrition": result.get("nutrition", ""),
+            "num_servings": result.get("num_servings", ""),
+            "cook_time_minutes": result.get("cook_time_minutes", ""),
+            "user_ratings": result.get("user_ratings", ""),
+        }
+        for idx, result in enumerate(data.get("results", []), 1)
+    ]
+    return jsonify({"results": results})
+
+
+@app.route("/tags")
+def get_tags_list() -> Response:
+    """
+    Generates a list of recipe tags from the Tasty API
     ---
     responses:
       200:
         description: A JSON response from the Proxy Service API
     """
-    api_url = f"{BASE_URL}/recipes/list"
-    querystring = {"from": "0", "size": "20", "tags": "under_30_minutes"}
+
+    api_url = f"{BASE_URL}/tags/list"
     headers = {
         "X-RapidAPI-Key": API_KEY,
         "X-RapidAPI-Host": "tasty.p.rapidapi.com",
     }
-    response = requests.get(api_url, headers=headers, params=querystring)
+
+    # Make request to Tasty API for recipe tags
+    response = requests.get(api_url, headers=headers)
     data = response.json()
+
+    # Parse Tasty API response for essential information
     results = [
         {
-            "id": result["id"],
-            "name": result["name"],
-            "description": result["description"],
-            "nutrition": result["nutrition"],
-            "num_servings": result["num_servings"],
-            "cook_time_minutes": result["cook_time_minutes"],
-            "user_ratings": result["user_ratings"],
+            "name": result.get("name", ""),
         }
-        for result in data["results"]
+        for result in data.get("results", [])
     ]
     return jsonify({"results": results})
 
